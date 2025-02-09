@@ -14,28 +14,27 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            GraphView(scores: scores)
-                .frame(height: 200)
-            List(scores) { score in
-                
-                VStack(alignment: .leading) {
-                    Text(dateFormatter.string(from: score.date))
-                        .font(.headline)
-                    
-                    if let uiImage = UIImage(data: score.image) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 80)
+            List {
+                GraphView(scores: scores)
+                    .frame(height: 200)
+                ForEach(scores) { score in
+                    VStack(alignment: .leading) {
+                        Text(dateFormatter.string(from: score.date))
+                            .font(.headline)
+                        if let uiImage = UIImage(data: score.image) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 80)
+                        }
+                        Text("\(score.score)円")
+                            .font(.subheadline)
+                            .padding(5)
+                            .background(score.score >= 0 ? Color.yellow : Color.blue)
+                            .cornerRadius(5)
                     }
-                    Text("\(score.score)円")
-                        .font(.subheadline)
-                        .padding(5)
-                        .background(score.score >= 0 ? Color.yellow : Color.blue)
-                        .cornerRadius(5)
                 }
             }
-            
             Spacer()
             
             Button {
