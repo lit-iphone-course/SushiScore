@@ -18,21 +18,28 @@ struct ContentView: View {
                 GraphView(scores: scores)
                     .frame(height: 200)
                 ForEach(scores) { score in
-                    VStack(alignment: .leading) {
+                    VStack {
                         Text(dateFormatter.string(from: score.date))
                             .font(.headline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text("\(score.score)円")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(score.score >= 0 ? Color.yellow : Color.blue)
+                            .frame(height: 60)
+                        
                         if let uiImage = UIImage(data: score.image) {
                             Image(uiImage: uiImage)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 80)
                         }
-                        Text("\(score.score)円")
-                            .font(.subheadline)
-                            .padding(5)
-                            .background(score.score >= 0 ? Color.yellow : Color.blue)
-                            .cornerRadius(5)
                     }
+                    .padding(.vertical, 5)
                 }
             }
             Spacer()
