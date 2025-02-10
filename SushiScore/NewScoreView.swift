@@ -29,7 +29,7 @@ struct NewScoreView: View {
                 .cornerRadius(8)
             
             if let selectedImageData {
-                let uiImage = UIImage(data: selectedImageData)!
+                let uiImage = UIImage(data: selectedImageData) ?? UIImage()
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFit()

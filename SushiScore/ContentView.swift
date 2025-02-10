@@ -13,15 +13,25 @@ struct ContentView: View {
     @State private var showNewScoreView = false
     
     var body: some View {
-        NavigationView {
-            VStack {
+        VStack {
+            List {
                 GraphView(scores: scores)
                     .frame(height: 200)
-                
-                List(scores) { score in
-                    VStack(alignment: .leading) {
+                ForEach(scores) { score in
+                    VStack {
                         Text(dateFormatter.string(from: score.date))
                             .font(.headline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text("\(score.score)円")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .frame(height: 30)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(score.score >= 0 ? Color.yellow : Color.blue)
+                            .cornerRadius(10)
                         
                         if let uiImage = UIImage(data: score.image) {
                             Image(uiImage: uiImage)
@@ -29,33 +39,28 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .frame(height: 80)
                         }
-                        Text("\(score.score)円")
-                            .font(.subheadline)
-                            .padding(5)
-                            .background(score.score >= 0 ? Color.yellow : Color.blue)
-                            .cornerRadius(5)
                     }
-                }
-                
-                Spacer()
-                
-                Button {
-                    showNewScoreView.toggle()
-                } label: {
-                    Text("新規点数記録")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding()
-                .sheet(isPresented: $showNewScoreView) {
-                    NewScoreView()
+                    .padding(.vertical, 5)
                 }
             }
-            .navigationTitle("記録一覧")
+            Spacer()
+            
+            Button {
+                showNewScoreView.toggle()
+            } label: {
+                Text("新規点数記録")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding()
+            .sheet(isPresented: $showNewScoreView) {
+                NewScoreView()
+            }
         }
+        .navigationTitle("記録一覧")
     }
 }
 
