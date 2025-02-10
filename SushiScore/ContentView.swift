@@ -27,10 +27,11 @@ struct ContentView: View {
                             .font(.title2)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .frame(height: 30)
                             .foregroundColor(.white)
                             .padding(10)
                             .background(score.score >= 0 ? Color.yellow : Color.blue)
-                            .frame(height: 60)
+                            .cornerRadius(10)
                         
                         if let uiImage = UIImage(data: score.image) {
                             Image(uiImage: uiImage)
