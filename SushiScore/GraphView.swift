@@ -25,7 +25,7 @@ struct GraphView: View {
             AxisMarks(values: .automatic) { value in
                 if let date = value.as(Date.self) {
                     AxisValueLabel {
-                        Text(date.formatted(.dateTime.month().day()))
+                        Text(date.formatted(.dateTime.month(.twoDigits).day(.twoDigits)))
                     }
                 }
             }
